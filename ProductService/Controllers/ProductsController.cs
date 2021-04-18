@@ -20,15 +20,61 @@ namespace ProductService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Product> GetProducts([FromUri] PagingParameterModel pagingParmeterModel)
+        public IEnumerable<Product> GetProducts([FromUri] PagingParameterModel pagingParmeterModel, string description = "All", string sortBy = "name", string order = "ascending")
         {
-            var source = _context.Products.ToList();
-            int count = source.Count();
+            IQueryable<Product> source = _context.Products;
+            List<Product> listProduct = new List<Product>();
+            switch (description.ToLower())
+            {
+                case "stationary":
+                    source = _context.Products.Where(p => p.Description.ToLower() == "stationary");
+                    break;
+                case "chocolates":
+                    source = _context.Products.Where(p => p.Description.ToLower() == "chocolates");
+                    break;
+                case "games":
+                    source = _context.Products.Where(p => p.Description.ToLower() == "games");
+                    break;
+                default:
+                    source = _context.Products;
+                    break;
+            }
+            if (order.ToLower() == "ascending")
+            {
+                switch (sortBy.ToLower())
+                {
+                    case "name":
+                        listProduct = source.OrderBy(p => p.Name).ToList();
+                        break;
+                    case "description":
+                        listProduct = source.OrderBy(p => p.Description).ToList();
+                        break;
+                    case "price":
+                        listProduct = source.OrderBy(p => p.Price).ToList();
+                        break;
+                }
+            }
+            else
+            {
+                switch (sortBy.ToLower())
+                {
+                    case "name":
+                        listProduct = source.OrderByDescending(p => p.Name).ToList();
+                        break;
+                    case "description":
+                        listProduct = source.OrderByDescending(p => p.Description).ToList();
+                        break;
+                    case "price":
+                        listProduct = source.OrderByDescending(p => p.Price).ToList();
+                        break;
+                }
+            }
+            int count = listProduct.Count();
             int CurrentPage = pagingParmeterModel.pageNumber;
             int PageSize = pagingParmeterModel.pageSize;
             int TotalCount = count;
             int TotalPages = (int)Math.Ceiling(count / (double)PageSize);
-            var items = source.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+            var items = listProduct.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
             var previousPage = CurrentPage > 1 ? "Yes" : "No";
             var nextPage = CurrentPage < TotalPages ? "Yes" : "No";
             var paginationMetadata = new
@@ -48,7 +94,6 @@ namespace ProductService.Controllers
         public HttpResponseMessage GetProductsById(int id)
         {
             var entity = _context.Products.FirstOrDefault(p => p.ID == id);
-            //int entityCount;
             if (entity != null)
             {
                 return Request.CreateResponse(HttpStatusCode.OK, entity);
@@ -58,10 +103,9 @@ namespace ProductService.Controllers
                 Response res = new Response();
                 res.error = 1;
                 res.errorMessage = "Product with Id = " + id.ToString() + " not found.";
-                //res.count = 0;
+                res.count = 0;
                 string response = ExtensionMethod.ToJSON(res);
                 return Request.CreateErrorResponse(HttpStatusCode.NotFound, response);
-                //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Product with Id = " + id.ToString() + "not found.");
             }
         }
         [HttpPost]
@@ -94,7 +138,6 @@ namespace ProductService.Controllers
                     res.count = 0;
                     string response = ExtensionMethod.ToJSON(res);
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, response);
-                    //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Product with id = " + id.ToString() + "not found.");
                 }
                 else
                 {
@@ -122,7 +165,6 @@ namespace ProductService.Controllers
                     res.count = 0;
                     string response = ExtensionMethod.ToJSON(res);
                     return Request.CreateErrorResponse(HttpStatusCode.NotFound, response);
-                    //return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Product with Id =" + id.ToString() + "not found to update.");
                 }
                 else
                 {
