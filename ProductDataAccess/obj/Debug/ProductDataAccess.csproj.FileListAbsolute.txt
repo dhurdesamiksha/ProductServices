@@ -1,0 +1,12 @@
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\bin\Debug\ProductDataAccess.dll.config
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\bin\Debug\ProductDataAccess.dll
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\bin\Debug\ProductDataAccess.pdb
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\bin\Debug\EntityFramework.dll
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\bin\Debug\EntityFramework.xml
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\obj\Debug\ProductDataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\obj\Debug\ProductDataAccess.csproj.CopyComplete
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\obj\Debug\ProductDataAccess.dll
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\obj\Debug\ProductDataAccess.pdb
+C:\Users\Samiksha Dhurde\source\repos\ProductService\ProductDataAccess\obj\Debug\ProductDataAccess.csprojAssemblyReference.cache
